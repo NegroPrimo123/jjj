@@ -1,0 +1,15 @@
+C:\Users\makxim\Desktop\task3\task3\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+C:\Users\makxim\Desktop\task3\task3\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+C:\Users\makxim\Desktop\task3\task3\DataAccess\bin\Debug\net8.0\DataAccess.dll
+C:\Users\makxim\Desktop\task3\task3\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.dll
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
+C:\Users\makxim\Desktop\task3\task3\DataAccess\obj\Debug\net8.0\DataAccess.sourcelink.json
