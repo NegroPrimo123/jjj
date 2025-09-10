@@ -10,6 +10,16 @@ namespace DataAccess.Wrapper
     public interface IRepositoryWrapper
     {
         IStudentRepository Student { get; }
+        ICourseRepository Course { get; }
+        IDepartmentRepository Department { get; }
+        IGradeRepository Grade { get; }
+        IGroupRepository Group { get; }
+        IProjectRepository Project { get; }
+        IProjectTeamRepository ProjectTeam { get; }
+        IStudentTeamRepository StudentTeam { get; }
+        ISubmissionRepository Submission { get; }
+        ITaskRepository Task { get; }
+        ITeacherRepository Teacher { get; }
         void Save();
     }
 }

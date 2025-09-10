@@ -1,0 +1,17 @@
+﻿using DataAccess.Interfaces;
+using DataAccess.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataAccess.Repositories
+{
+    public class GroupRepository : RepositoryBase<Group>, IGroupRepository
+    {
+        public GroupRepository(Task2DbContext repositoryContext) : base(repositoryContext)
+        {
+        }
+    }
+}
