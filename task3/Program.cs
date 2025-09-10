@@ -1,9 +1,10 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
-using DataAccess.Interfaces;
 using DataAccess.Models;
 using DataAccess.Wrapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace task3
 {
@@ -13,37 +14,70 @@ namespace task3
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Добавляем сервисы в контейнер
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
-            // Настройка базы данных (PostgreSQL)
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Task Management API",
+                    Version = "v1",
+                    Description = "API for managing tasks and related entities"
+                });
+
+                options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
+
+                try
+                {
+                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                    if (File.Exists(xmlPath))
+                    {
+                        options.IncludeXmlComments(xmlPath);
+                    }
+                }
+                catch
+                {
+                }
+            });
+
             builder.Services.AddDbContext<Task2DbContext>(options =>
                 options.UseNpgsql("Host=localhost;Port=1357;Database=task2_DB;Username=postgres;Password=root111;"));
 
-            // Регистрация зависимостей
             builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+
+            builder.Services.AddScoped<ICourseService, CourseService>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IGradeService, GradeService>();
+            builder.Services.AddScoped<IGroupService, GroupService>();
+            builder.Services.AddScoped<IProjectService, ProjectService>();
+            builder.Services.AddScoped<IProjectTeamService, ProjectTeamService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<IStudentTeamService, StudentTeamService>();
+            builder.Services.AddScoped<ISubmissionService, SubmissionService>();
+            //builder.Services.AddScoped<ITaskService, TaskService>();
+            builder.Services.AddScoped<ITeacherService, TeacherService>();
 
             var app = builder.Build();
 
-            // Настройка конвейера HTTP запросов
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Task API v1");
+                    options.RoutePrefix = "swagger";
+                });
             }
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
-            
-            // Маршрутизация
+
             app.MapControllers();
             app.MapGet("/", () => "Hello World!");
 
-            // Запускаем бесконечное ожидание запросов
-            app.Run(); // Это предотвратит завершение программы
+            app.Run();
         }
     }
 }
