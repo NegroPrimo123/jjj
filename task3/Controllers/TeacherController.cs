@@ -1,6 +1,8 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
+using task3.Contracts.Teacher;
 
 namespace BackendApi.Controllers
 {
@@ -15,32 +17,69 @@ namespace BackendApi.Controllers
             _teacherService = teacherService;
         }
 
+        /// <summary>
+        /// Получение списка всех преподавателей
+        /// </summary>
+        /// <returns>Список всех преподавателей</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _teacherService.GetAll());
         }
 
+        /// <summary>
+        /// Получение преподавателя по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор преподавателя</param>
+        /// <returns>Данные преподавателя</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(await _teacherService.GetById(id));
         }
 
+        /// <summary>
+        /// Создание нового преподавателя
+        /// </summary>
+        ///         /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///         "FirstName": Иван,
+        ///         "LastName": "Иванов",
+        ///         "DepartmentId": 1
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="teacher">Данные преподавателя</param>
+        /// <returns>Результат операции</returns>
         [HttpPost]
-        public async Task<IActionResult> Add(Teacher teacher)
+        public async Task<IActionResult> Add(CreateTeacherRequest request)
         {
-            await _teacherService.Create(teacher);
+            var teacherDto = request.Adapt<Teacher>();
+            await _teacherService.Create(teacherDto);
             return Ok();
         }
 
+        /// <summary>
+        /// Обновление данных преподавателя
+        /// </summary>
+        /// <param name="teacher">Обновленные данные преподавателя</param>
+        /// <returns>Результат операции</returns>
         [HttpPut]
-        public async Task<IActionResult> Update(Teacher teacher)
+        public async Task<IActionResult> Update(CreateTeacherRequest request)
         {
-            await _teacherService.Update(teacher);
+            var teacherDto = request.Adapt<Teacher>();
+            await _teacherService.Update(teacherDto);
             return Ok();
         }
 
+        /// <summary>
+        /// Удаление преподавателя по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор преподавателя</param>
+        /// <returns>Результат операции</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
