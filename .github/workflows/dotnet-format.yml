@@ -2,10 +2,9 @@ name: .NET Format Check
 
 on:
   push:
-    branches: [ \
-**\ ]
+    branches: [ "**" ]
   pull_request:
-    branches: [ \**\ ]
+    branches: [ "**" ]
 
 jobs:
   format-check:
