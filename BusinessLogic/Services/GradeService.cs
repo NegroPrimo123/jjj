@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Grade>> GetAll()
+        public async Task<List<Grade>> GetAll()
         {
-            return _repositoryWrapper.Grade.FindAll().ToListAsync();
+            return await _repositoryWrapper.Grade.FindAll();
         }
 
-        public Task<Grade> GetById(int id)
+        public async Task<Grade> GetById(int id)
         {
-            var grade = _repositoryWrapper.Grade
-                .FindByCondition(x => x.GradeId == id).First();
-            return System.Threading.Tasks.Task.FromResult(grade);
+            var grade = await _repositoryWrapper.Grade
+                .FindByCondition(x => x.GradeId == id);
+            return grade.First();
         }
 
-        public System.Threading.Tasks.Task Create(Grade model)
+        public async System.Threading.Tasks.Task Create(Grade model)
         {
-            _repositoryWrapper.Grade.Create(model);
+            await _repositoryWrapper.Grade.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Grade model)
+        public async System.Threading.Tasks.Task Update(Grade model)
         {
             _repositoryWrapper.Grade.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var grade = _repositoryWrapper.Grade
-                .FindByCondition(x => x.GradeId == id).First();
+            var grade = await _repositoryWrapper.Grade
+                .FindByCondition(x => x.GradeId == id);
 
-            _repositoryWrapper.Grade.Delete(grade);
+            _repositoryWrapper.Grade.Delete(grade.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

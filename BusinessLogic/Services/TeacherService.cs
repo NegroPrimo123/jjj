@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,36 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Teacher>> GetAll()
+        public async Task<List<Teacher>> GetAll()
         {
-            return _repositoryWrapper.Teacher.FindAll().ToListAsync();
+            return await _repositoryWrapper.Teacher.FindAll();
         }
 
-        public Task<Teacher> GetById(int id)
+        public async Task<Teacher> GetById(int id)
         {
-            var teacher = _repositoryWrapper.Teacher
-                .FindByCondition(x => x.TeacherId == id).First();
-            return System.Threading.Tasks.Task.FromResult(teacher);
+            var teacher = await _repositoryWrapper.Teacher
+                .FindByCondition(x => x.TeacherId == id);
+            return teacher.First();
         }
 
-        public System.Threading.Tasks.Task Create(Teacher model)
+        public async System.Threading.Tasks.Task Create(Teacher model)
         {
-            _repositoryWrapper.Teacher.Create(model);
-            _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
+            await _repositoryWrapper.Teacher.Create(model);
         }
 
-        public System.Threading.Tasks.Task Update(Teacher model)
+        public async System.Threading.Tasks.Task Update(Teacher model)
         {
             _repositoryWrapper.Teacher.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var teacher = _repositoryWrapper.Teacher
-                .FindByCondition(x => x.TeacherId == id).First();
+            var teacher = await _repositoryWrapper.Teacher
+                .FindByCondition(x => x.TeacherId == id);
 
-            _repositoryWrapper.Teacher.Delete(teacher);
+            _repositoryWrapper.Teacher.Delete(teacher.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Projectteam>> GetAll()
+        public async Task<List<Projectteam>> GetAll()
         {
-            return _repositoryWrapper.ProjectTeam.FindAll().ToListAsync();
+            return await _repositoryWrapper.ProjectTeam.FindAll();
         }
 
-        public Task<Projectteam> GetById(int id)
+        public async Task<Projectteam> GetById(int id)
         {
-            var projectTeam = _repositoryWrapper.ProjectTeam
-                .FindByCondition(x => x.TeamId == id).First(); // Изменено с ProjectTeamId на Id
-            return System.Threading.Tasks.Task.FromResult(projectTeam);
+            var projectTeam = await _repositoryWrapper.ProjectTeam
+                .FindByCondition(x => x.TeamId == id);
+            return projectTeam.First();
         }
 
-        public System.Threading.Tasks.Task Create(Projectteam model)
+        public async System.Threading.Tasks.Task Create(Projectteam model)
         {
-            _repositoryWrapper.ProjectTeam.Create(model);
+            await _repositoryWrapper.ProjectTeam.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Projectteam model)
+        public async System.Threading.Tasks.Task Update(Projectteam model)
         {
             _repositoryWrapper.ProjectTeam.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var projectTeam = _repositoryWrapper.ProjectTeam
-                .FindByCondition(x => x.TeamId == id).First(); // Изменено с ProjectTeamId на Id
+            var projectTeam = await _repositoryWrapper.ProjectTeam
+                .FindByCondition(x => x.TeamId == id);
 
-            _repositoryWrapper.ProjectTeam.Delete(projectTeam);
+            _repositoryWrapper.ProjectTeam.Delete(projectTeam.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

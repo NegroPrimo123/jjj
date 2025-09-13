@@ -1,8 +1,6 @@
-﻿//using BusinessLogic.Interfaces;
-//using DataAccess.Models;
-//using DataAccess.Wrapper;
+﻿//using Domain.Models;
+//using Domain.Interfaces;
 //using Microsoft.EntityFrameworkCore;
-//using TaskModel = DataAccess.Models.Task;
 
 //namespace BusinessLogic.Services
 //{
@@ -15,40 +13,37 @@
 //            _repositoryWrapper = repositoryWrapper;
 //        }
 
-//        public Task<List<System.Threading.Tasks.Task>> GetAll()
+//        public async Task<List<System.Threading.Tasks.Task>> GetAll()
 //        {
-//            return _repositoryWrapper.Task.FindAll().ToListAsync();
+//            return await _repositoryWrapper.Task.FindAll();
 //        }
 
-//        public Task<System.Threading.Tasks.Task> GetById(int id)
+//        public async Task<System.Threading.Tasks.Task> GetById(int id)
 //        {
-//            var task = _repositoryWrapper.Task
-//                .FindByCondition(x => x.TaskId == id).First();
-//            return System.Threading.Tasks.Task.FromResult(task);
+//            var task = await _repositoryWrapper.Task
+//                .FindByCondition(x => x.TaskId == id);
+//            return task.First();
 //        }
 
-//        public System.Threading.Tasks.Task Create(System.Threading.Tasks.Task model)
+//        public async System.Threading.Tasks.Task Create(System.Threading.Tasks.Task model)
 //        {
-//            _repositoryWrapper.Task.Create(model);
+//            await _repositoryWrapper.Task.Create(model);
 //            _repositoryWrapper.Save();
-//            return System.Threading.Tasks.Task.CompletedTask;
 //        }
 
-//        public System.Threading.Tasks.Task Update(System.Threading.Tasks.Task model)
+//        public async System.Threading.Tasks.Task Update(System.Threading.Tasks.Task model)
 //        {
 //            _repositoryWrapper.Task.Update(model);
 //            _repositoryWrapper.Save();
-//            return System.Threading.Tasks.Task.CompletedTask;
 //        }
 
-//        public System.Threading.Tasks.Task Delete(int id)
+//        public async System.Threading.Tasks.Task Delete(int id)
 //        {
-//            var task = _repositoryWrapper.Task
-//                .FindByCondition(x => x.TaskId == id).First();
+//            var task = await _repositoryWrapper.Task
+//                .FindByCondition(x => x.TaskId == id);
 
-//            _repositoryWrapper.Task.Delete(task);
+//            _repositoryWrapper.Task.Delete(task.First());
 //            _repositoryWrapper.Save();
-//            return System.Threading.Tasks.Task.CompletedTask;
 //        }
 //    }
 //}

@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Student>> GetAll()
+        public async Task<List<Student>> GetAll()
         {
-            return _repositoryWrapper.Student.FindAll().ToListAsync();
+            return await _repositoryWrapper.Student.FindAll();
         }
 
-        public Task<Student> GetById(int id)
+        public async Task<Student> GetById(int id)
         {
-            var user = _repositoryWrapper.Student
-                .FindByCondition(x => x.StudentId == id).First();
-            return System.Threading.Tasks.Task.FromResult(user);
+            var user = await _repositoryWrapper.Student
+                .FindByCondition(x => x.StudentId == id);
+            return user.First();
         }
 
-        public System.Threading.Tasks.Task Create(Student model)
+        public async System.Threading.Tasks.Task Create(Student model)
         {
-            _repositoryWrapper.Student.Create(model);
+            await _repositoryWrapper.Student.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Student model)
+        public async System.Threading.Tasks.Task Update(Student model)
         {
             _repositoryWrapper.Student.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var user = _repositoryWrapper.Student
-                .FindByCondition(x => x.StudentId == id).First();
+            var user = await _repositoryWrapper.Student
+                .FindByCondition(x => x.StudentId == id);
 
-            _repositoryWrapper.Student.Delete(user);
+            _repositoryWrapper.Student.Delete(user.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

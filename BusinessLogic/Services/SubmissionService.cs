@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Submission>> GetAll()
+        public async Task<List<Submission>> GetAll()
         {
-            return _repositoryWrapper.Submission.FindAll().ToListAsync();
+            return await _repositoryWrapper.Submission.FindAll();
         }
 
-        public Task<Submission> GetById(int id)
+        public async Task<Submission> GetById(int id)
         {
-            var submission = _repositoryWrapper.Submission
-                .FindByCondition(x => x.SubmissionId == id).First();
-            return System.Threading.Tasks.Task.FromResult(submission);
+            var submission = await _repositoryWrapper.Submission
+                .FindByCondition(x => x.SubmissionId == id);
+            return submission.First();
         }
 
-        public System.Threading.Tasks.Task Create(Submission model)
+        public async System.Threading.Tasks.Task Create(Submission model)
         {
-            _repositoryWrapper.Submission.Create(model);
+            await _repositoryWrapper.Submission.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Submission model)
+        public async System.Threading.Tasks.Task Update(Submission model)
         {
             _repositoryWrapper.Submission.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var submission = _repositoryWrapper.Submission
-                .FindByCondition(x => x.SubmissionId == id).First();
+            var submission = await _repositoryWrapper.Submission
+                .FindByCondition(x => x.SubmissionId == id);
 
-            _repositoryWrapper.Submission.Delete(submission);
+            _repositoryWrapper.Submission.Delete(submission.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Studentteam>> GetAll()
+        public async Task<List<Studentteam>> GetAll()
         {
-            return _repositoryWrapper.StudentTeam.FindAll().ToListAsync();
+            return await _repositoryWrapper.StudentTeam.FindAll();
         }
 
-        public Task<Studentteam> GetById(int id)
+        public async Task<Studentteam> GetById(int id)
         {
-            var studentTeam = _repositoryWrapper.StudentTeam
-                .FindByCondition(x => x.Id == id).First(); // Изменено с StudentTeamId на Id
-            return System.Threading.Tasks.Task.FromResult(studentTeam);
+            var studentTeam = await _repositoryWrapper.StudentTeam
+                .FindByCondition(x => x.Id == id);
+            return studentTeam.First();
         }
 
-        public System.Threading.Tasks.Task Create(Studentteam model)
+        public async System.Threading.Tasks.Task Create(Studentteam model)
         {
-            _repositoryWrapper.StudentTeam.Create(model);
+            await _repositoryWrapper.StudentTeam.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Studentteam model)
+        public async System.Threading.Tasks.Task Update(Studentteam model)
         {
             _repositoryWrapper.StudentTeam.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var studentTeam = _repositoryWrapper.StudentTeam
-                .FindByCondition(x => x.Id == id).First(); // Изменено с StudentTeamId на Id
+            var studentTeam = await _repositoryWrapper.StudentTeam
+                .FindByCondition(x => x.Id == id);
 
-            _repositoryWrapper.StudentTeam.Delete(studentTeam);
+            _repositoryWrapper.StudentTeam.Delete(studentTeam.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

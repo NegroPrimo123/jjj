@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Course>> GetAll()
+        public async Task<List<Course>> GetAll()
         {
-            return _repositoryWrapper.Course.FindAll().ToListAsync();
+            return await _repositoryWrapper.Course.FindAll();
         }
 
-        public Task<Course> GetById(int id)
+        public async Task<Course> GetById(int id)
         {
-            var course = _repositoryWrapper.Course
-                .FindByCondition(x => x.CourseId == id).First();
-            return System.Threading.Tasks.Task.FromResult(course);
+            var course = await _repositoryWrapper.Course
+                .FindByCondition(x => x.CourseId == id);
+            return course.First();
         }
 
-        public System.Threading.Tasks.Task Create(Course model)
+        public async System.Threading.Tasks.Task Create(Course model)
         {
-            _repositoryWrapper.Course.Create(model);
+            await _repositoryWrapper.Course.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Course model)
+        public async System.Threading.Tasks.Task Update(Course model)
         {
             _repositoryWrapper.Course.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var course = _repositoryWrapper.Course
-                .FindByCondition(x => x.CourseId == id).First();
+            var course = await _repositoryWrapper.Course
+                .FindByCondition(x => x.CourseId == id);
 
-            _repositoryWrapper.Course.Delete(course);
+            _repositoryWrapper.Course.Delete(course.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

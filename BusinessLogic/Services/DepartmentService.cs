@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Department>> GetAll()
+        public async Task<List<Department>> GetAll()
         {
-            return _repositoryWrapper.Department.FindAll().ToListAsync();
+            return await _repositoryWrapper.Department.FindAll();
         }
 
-        public Task<Department> GetById(int id)
+        public async Task<Department> GetById(int id)
         {
-            var department = _repositoryWrapper.Department
-                .FindByCondition(x => x.DepartmentId == id).First();
-            return System.Threading.Tasks.Task.FromResult(department);
+            var department = await _repositoryWrapper.Department
+                .FindByCondition(x => x.DepartmentId == id);
+            return department.First();
         }
 
-        public System.Threading.Tasks.Task Create(Department model)
+        public async System.Threading.Tasks.Task Create(Department model)
         {
-            _repositoryWrapper.Department.Create(model);
+            await _repositoryWrapper.Department.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Department model)
+        public async System.Threading.Tasks.Task Update(Department model)
         {
             _repositoryWrapper.Department.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var department = _repositoryWrapper.Department
-                .FindByCondition(x => x.DepartmentId == id).First();
+            var department = await _repositoryWrapper.Department
+                .FindByCondition(x => x.DepartmentId == id);
 
-            _repositoryWrapper.Department.Delete(department);
+            _repositoryWrapper.Department.Delete(department.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }

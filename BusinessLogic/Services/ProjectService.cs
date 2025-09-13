@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
-using DataAccess.Wrapper;
+﻿using Domain.Models;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
@@ -14,40 +13,37 @@ namespace BusinessLogic.Services
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public Task<List<Project>> GetAll()
+        public async Task<List<Project>> GetAll()
         {
-            return _repositoryWrapper.Project.FindAll().ToListAsync();
+            return await _repositoryWrapper.Project.FindAll();
         }
 
-        public Task<Project> GetById(int id)
+        public async Task<Project> GetById(int id)
         {
-            var project = _repositoryWrapper.Project
-                .FindByCondition(x => x.ProjectId == id).First();
-            return System.Threading.Tasks.Task.FromResult(project);
+            var project = await _repositoryWrapper.Project
+                .FindByCondition(x => x.ProjectId == id);
+            return project.First();
         }
 
-        public System.Threading.Tasks.Task Create(Project model)
+        public async System.Threading.Tasks.Task Create(Project model)
         {
-            _repositoryWrapper.Project.Create(model);
+            await _repositoryWrapper.Project.Create(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Update(Project model)
+        public async System.Threading.Tasks.Task Update(Project model)
         {
             _repositoryWrapper.Project.Update(model);
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            var project = _repositoryWrapper.Project
-                .FindByCondition(x => x.ProjectId == id).First();
+            var project = await _repositoryWrapper.Project
+                .FindByCondition(x => x.ProjectId == id);
 
-            _repositoryWrapper.Project.Delete(project);
+            _repositoryWrapper.Project.Delete(project.First());
             _repositoryWrapper.Save();
-            return System.Threading.Tasks.Task.CompletedTask;
         }
     }
 }
