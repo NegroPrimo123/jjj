@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>task3</name>
+    </assembly>
+    <members>
+        <member name="M:BackendApi.Controllers.CourseController.GetAll">
+            <summary>
+            Получение списка всех курсов
+            </summary>
+            <returns>Список всех курсов</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.CourseController.GetById(System.Int32)">
+            <summary>
+            Получение курса по идентификатору
+            </summary>
+            <param name="id">Идентификатор курса</param>
+            <returns>Данные курса</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.CourseController.Add(task3.Contracts.Course.CreateCourseRequest)">
+             <summary>
+             Создание нового курса
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "courseName": "Программирование на C#",
+                     "teacherId": 1
+                 }
+            
+             </remarks>
+             <param name="course">Данные курса</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.CourseController.Update(task3.Contracts.Course.CreateCourseRequest)">
+            <summary>
+            Обновление данных курса
+            </summary>
+            <param name="course">Обновленные данные курса</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.CourseController.Delete(System.Int32)">
+            <summary>
+            Удаление курса по идентификатору
+            </summary>
+            <param name="id">Идентификатор курса</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.DepartmentController.GetAll">
+            <summary>
+            Получение списка всех кафедр
+            </summary>
+            <returns>Список всех кафедр</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.DepartmentController.GetById(System.Int32)">
+            <summary>
+            Получение кафедры по идентификатору
+            </summary>
+            <param name="id">Идентификатор кафедры</param>
+            <returns>Данные кафедры</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.DepartmentController.Add(task3.Contracts.Grade.CreateGradeRequest)">
+             <summary>
+             Создание новой кафедры
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "departmentName": "Кафедра информационных технологий"
+                 }
+            
+             </remarks>
+             <param name="department">Данные кафедры</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.DepartmentController.Update(task3.Contracts.Grade.CreateGradeRequest)">
+            <summary>
+            Обновление данных кафедры
+            </summary>
+            <param name="department">Обновленные данные кафедры</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.DepartmentController.Delete(System.Int32)">
+            <summary>
+            Удаление кафедры по идентификатору
+            </summary>
+            <param name="id">Идентификатор кафедры</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GradeController.GetAll">
+            <summary>
+            Получение списка всех оценок
+            </summary>
+            <returns>Список всех оценок</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GradeController.GetById(System.Int32)">
+            <summary>
+            Получение оценки по идентификатору
+            </summary>
+            <param name="id">Идентификатор оценки</param>
+            <returns>Данные оценки</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GradeController.Add(task3.Contracts.Grade.CreateGradeRequest)">
+             <summary>
+             Получение оценки по идентификатору
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "submissionId": 1,
+                     "teacherId": 1,
+                     "score": 18,
+                     "feedback": "Отличное проектирование архитектуры",
+                     "gradingDate": "2025-09-12"
+                 }
+                 
+             </remarks>
+             <param name="id">Идентификатор оценки</param>
+             <returns>Данные оценки</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GradeController.Update(task3.Contracts.Grade.CreateGradeRequest)">
+            <summary>
+            Обновление данных оценки
+            </summary>
+            <param name="grade">Обновленные данные оценки</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GradeController.Delete(System.Int32)">
+            <summary>
+            Удаление оценки по идентификатору
+            </summary>
+            <param name="id">Идентификатор оценки</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GroupController.GetAll">
+            <summary>
+            Получение списка всех групп
+            </summary>
+            <returns>Список всех групп</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GroupController.GetById(System.Int32)">
+            <summary>
+            Получение группы по идентификатору
+            </summary>
+            <param name="id">Идентификатор группы</param>
+            <returns>Данные группы</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GroupController.Add(task3.Contracts.Group.CreateGroupRequest)">
+             <summary>
+             Создание новой группы
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                      "groupName": "24ИС-21-2"
+                 }
+            
+             </remarks>
+             <param name="group">Данные группы</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GroupController.Update(task3.Contracts.Group.CreateGroupRequest)">
+             <summary>
+             Обновление данных группы
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                      "groupName": "24ИС-21-2"
+                 }
+            
+             </remarks>
+             <param name="group">Обновленные данные группы</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.GroupController.Delete(System.Int32)">
+            <summary>
+            Удаление группы по идентификатору
+            </summary>
+            <param name="id">Идентификатор группы</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectController.GetAll">
+            <summary>
+            Получение списка всех проектов
+            </summary>
+            <returns>Список всех проектов</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectController.GetById(System.Int32)">
+            <summary>
+            Получение проекта по идентификатору
+            </summary>
+            <param name="id">Идентификатор проекта</param>
+            <returns>Данные проекта</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectController.Add(task3.Contracts.Project.CreateProjectRequest)">
+             <summary>
+             Создание нового проекта
+             </summary>
+                     /// <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "projectName": "Курсовой проект по C#",
+                     "description": "Разработка консольного приложения",
+                     "courseId": 1,
+                     "maxScore": 100,
+                     "deadline": "2025-09-12"
+                 }
+            
+             </remarks>
+             <param name="project">Данные проекта</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectController.Update(task3.Contracts.Project.CreateProjectRequest)">
+            <summary>
+            Обновление данных проекта
+            </summary>
+            <param name="project">Обновленные данные проекта</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectController.Delete(System.Int32)">
+            <summary>
+            Удаление проекта по идентификатору
+            </summary>
+            <param name="id">Идентификатор проекта</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectTeamController.GetAll">
+            <summary>
+            Получение списка всех проектных команд
+            </summary>
+            <returns>Список всех проектных команд</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectTeamController.GetById(System.Int32)">
+            <summary>
+            Получение проектной команды по идентификатору
+            </summary>
+            <param name="id">Идентификатор проектной команды</param>
+            <returns>Данные проектной команды</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectTeamController.Add(task3.Contracts.ProjectTeam.CreateProjectTeamRequest)">
+             <summary>
+             Создание новой проектной команды
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "teamName": "Команда Alpha",
+                     "projectId": 1
+                 }
+            
+             </remarks>
+             <param name="projectTeam">Данные проектной команды</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectTeamController.Update(task3.Contracts.ProjectTeam.CreateProjectTeamRequest)">
+            <summary>
+            Обновление данных проектной команды
+            </summary>
+            <param name="projectTeam">Обновленные данные проектной команды</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.ProjectTeamController.Delete(System.Int32)">
+            <summary>
+            Удаление проектной команды по идентификатору
+            </summary>
+            <param name="id">Идентификатор проектной команды</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.UserController.GetAll">
+            <summary>
+            Получение списка всех студентов
+            </summary>
+            <returns>Список всех пользователей</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.UserController.GetById(System.Int32)">
+            <summary>
+            Получение студента по идентификатору
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <returns>Данные пользователя</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.UserController.Add(task3.Contracts.User.CreateUserRequest)">
+             <summary>
+             Создание нового студента
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                    "firstName" : "Иван",
+                    "lastname" : "Иванов",
+                    "groupId" : "1",
+                 }
+            
+             </remarks>
+             <param name="request">Данные студента</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.UserController.Update(task3.Contracts.User.CreateUserRequest)">
+            <summary>
+            Обновление данных студента
+            </summary>
+            <param name="user">Обновленные данные студента</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.UserController.Delete(System.Int32)">
+            <summary>
+            Удаление студента по идентификатору
+            </summary>
+            <param name="id">Идентификатор студента</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.StudentTeamController.GetAll">
+            <summary>
+            Получение списка всех студенческих команд
+            </summary>
+            <returns>Список всех студенческих команд</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.StudentTeamController.GetById(System.Int32)">
+            <summary>
+            Получение студенческой команды по идентификатору
+            </summary>
+            <param name="id">Идентификатор студенческой команды</param>
+            <returns>Данные студенческой команды</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.StudentTeamController.Add(task3.Contracts.StudentTeam.CreateStudentTeamRequest)">
+             <summary>
+             Создание новой студенческой команды
+             </summary>
+                     /// <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "studentId": 1,
+                     "teamId": 1,
+                 }
+            
+             </remarks>
+             <param name="studentTeam">Данные студенческой команды</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.StudentTeamController.Update(task3.Contracts.StudentTeam.CreateStudentTeamRequest)">
+            <summary>
+            Обновление данных студенческой команды
+            </summary>
+            <param name="studentTeam">Обновленные данные студенческой команды</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.StudentTeamController.Delete(System.Int32)">
+            <summary>
+            Удаление студенческой команды по идентификатору
+            </summary>
+            <param name="id">Идентификатор студенческой команды</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.SubmissionController.GetAll">
+            <summary>
+            Получение списка всех отправленных работ
+            </summary>
+            <returns>Список всех отправленных работ</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.SubmissionController.GetById(System.Int32)">
+            <summary>
+            Получение отправленной работы по идентификатору
+            </summary>
+            <param name="id">Идентификатор отправленной работы</param>
+            <returns>Данные отправленной работы</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.SubmissionController.Add(task3.Contracts.Submission.CreateSubmissionRequest)">
+             <summary>
+             Создание новой отправленной работы
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "teamId": 1,
+                     "taskId": 1,
+                     "submissionDate": "2025-09-12 23:20:00",
+                     "filePath": "/files/analysis.docx",
+                     "status": "submitted"
+                 }
+            
+             </remarks>
+             <param name="submission">Данные отправленной работы</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.SubmissionController.Update(task3.Contracts.Submission.CreateSubmissionRequest)">
+            <summary>
+            Обновление данных отправленной работы
+            </summary>
+            <param name="submission">Обновленные данные отправленной работы</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.SubmissionController.Delete(System.Int32)">
+            <summary>
+            Удаление отправленной работы по идентификатору
+            </summary>
+            <param name="id">Идентификатор отправленной работы</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TaskController.GetAll">
+            <summary>
+            Получение списка всех задач
+            </summary>
+            <returns>Список всех задач</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TaskController.GetById(System.Int32)">
+            <summary>
+            Получение задачи по идентификатору
+            </summary>
+            <param name="id">Идентификатор задачи</param>
+            <returns>Данные задачи</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TaskController.Add(task3.Contracts.Task.CreateTaskRequest)">
+             <summary>
+             Создание новой задачи
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "TaskName": Проектирование БД,
+                     "ProjectId": "1",
+                     "TaskDeadline": "2025-09-12",
+                     "TaskMaxScore": 100
+                 }
+            
+             </remarks>
+             <param name="task">Данные задачи</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TaskController.Update(task3.Contracts.Task.CreateTaskRequest)">
+            <summary>
+            Обновление данных задачи
+            </summary>
+            <param name="task">Обновленные данные задачи</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TaskController.Delete(System.Int32)">
+            <summary>
+            Удаление задачи по идентификатору
+            </summary>
+            <param name="id">Идентификатор задачи</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TeacherController.GetAll">
+            <summary>
+            Получение списка всех преподавателей
+            </summary>
+            <returns>Список всех преподавателей</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TeacherController.GetById(System.Int32)">
+            <summary>
+            Получение преподавателя по идентификатору
+            </summary>
+            <param name="id">Идентификатор преподавателя</param>
+            <returns>Данные преподавателя</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TeacherController.Add(task3.Contracts.Teacher.CreateTeacherRequest)">
+             <summary>
+             Создание нового преподавателя
+             </summary>
+                     /// <remarks>
+             Пример запроса:
+            
+                 POST /Todo
+                 {
+                     "FirstName": Иван,
+                     "LastName": "Иванов",
+                     "DepartmentId": 1
+                 }
+            
+             </remarks>
+             <param name="teacher">Данные преподавателя</param>
+             <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TeacherController.Update(task3.Contracts.Teacher.CreateTeacherRequest)">
+            <summary>
+            Обновление данных преподавателя
+            </summary>
+            <param name="teacher">Обновленные данные преподавателя</param>
+            <returns>Результат операции</returns>
+        </member>
+        <member name="M:BackendApi.Controllers.TeacherController.Delete(System.Int32)">
+            <summary>
+            Удаление преподавателя по идентификатору
+            </summary>
+            <param name="id">Идентификатор преподавателя</param>
+            <returns>Результат операции</returns>
+        </member>
+    </members>
+</doc>

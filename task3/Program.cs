@@ -1,10 +1,10 @@
-using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
-using DataAccess.Models;
 using DataAccess.Wrapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Domain.Models;
+using Domain.Interfaces;
 
 namespace task3
 {
@@ -21,10 +21,22 @@ namespace task3
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Task Management API",
                     Version = "v1",
-                    Description = "API for managing tasks and related entities"
+                    Title = "Система управления проектной деятельностью",
+                    Description = "Система предназначена для организации проектной деятельности в образовательном учреждении (колледже/вузе). \n" +
+                    "\nПозволяет управлять учебными курсами, студенческими группами, проектами и оценками.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Пример контакта",
+                        Url = new Uri("https://example.com/contact")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Пример лицензии",
+                        Url = new Uri("https://example.com/license")
+                    }
                 });
+
 
                 options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
 
@@ -45,8 +57,7 @@ namespace task3
             builder.Services.AddDbContext<Task2DbContext>(options =>
                 options.UseNpgsql("Host=localhost;Port=1357;Database=task2_DB;Username=postgres;Password=root111;"));
 
-            builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
+            builder.Services.AddScoped<Domain.Interfaces.IRepositoryWrapper, RepositoryWrapper>();
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IGradeService, GradeService>();
@@ -70,6 +81,7 @@ namespace task3
                     options.RoutePrefix = "swagger";
                 });
             }
+
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
