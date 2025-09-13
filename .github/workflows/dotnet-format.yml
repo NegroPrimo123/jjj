@@ -1,26 +1,52 @@
-name: .NET Format Check
+name: .NET Tests
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ main, master, develop ]
   pull_request:
-    branches: [ "**" ]
+    branches: [ main, master, develop ]
 
 jobs:
-  format-check:
+  test:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+    
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
-
-    - name: Install dotnet-format
-      run: dotnet tool install -g dotnet-format
-
-    - name: Check formatting
-      run: dotnet-format --folder --check --verbosity diagnostic
+        dotnet-version: '8.0.x' 
+    
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    
+    - name: Cache build outputs
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/bin
+          **/obj
+        key: ${{ runner.os }}-build-${{ hashFiles('**/*.csproj') }}
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+    
+    - name: Run tests
+      run: dotnet test --no-build --configuration Release --verbosity normal
+      
+    - name: Upload test results
+      if: always() 
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-${{ runner.os }}
+        path: "**/TestResults/*.xml"
