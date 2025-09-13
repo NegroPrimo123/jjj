@@ -19,3 +19,5 @@
 
 Задание 3
 Подключил в репозиторий GitHub Actions
+![photo_5346167744812414221_y](https://github.com/user-attachments/assets/ca65df88-e32d-4a78-ac0b-735e71984091)
+![photo_5346167744812414230_y](https://github.com/user-attachments/assets/11da52a5-98d9-4586-93c6-bde670a2c054)
