@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class StudentRepository : RepositoryBase<Student>, IStudentRepository
+    public class CourseRepository : RepositoryBase<Course>, ICourseRepository
     {
-        public StudentRepository(Task2DbContext repositoryContext) : base(repositoryContext)
+        public CourseRepository(Task2DbContext repositoryContext) : base(repositoryContext)
         {
         }
     }
