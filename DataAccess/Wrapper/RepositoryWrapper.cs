@@ -1,11 +1,11 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.Models;
+﻿using Domain.Models;
 using DataAccess.Repositories;
-using System;
+using Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Wrapper;
 
 namespace DataAccess.Wrapper
 {
@@ -13,7 +13,6 @@ namespace DataAccess.Wrapper
     {
         private Task2DbContext _repoContext;
 
-        // Инициализируем поля как nullable
         private IStudentRepository? _student;
         private ICourseRepository? _course;
         private IDepartmentRepository? _department;
@@ -163,9 +162,9 @@ namespace DataAccess.Wrapper
             _repoContext = repositoryContext;
         }
 
-        public void Save()
+        public async System.Threading.Tasks.Task Save()
         {
-            _repoContext.SaveChanges();
+            await _repoContext.SaveChangesAsync();
         }
     }
 }

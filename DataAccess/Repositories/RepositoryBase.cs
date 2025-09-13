@@ -1,7 +1,6 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.Models;
+﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,12 +16,14 @@ namespace DataAccess.Repositories
         {
             RepositoryContext = repositoryContext;
         }
-        public IQueryable<T> FindAll() => RepositoryContext.Set<T>().AsNoTracking();
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) =>
-            RepositoryContext.Set<T>().Where(expression).AsNoTracking();
 
-        public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
-        public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
-        public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+        public async Task<List<T>> FindAll() => await RepositoryContext.Set<T>().AsNoTracking().ToListAsync();
+
+        public async Task<List<T>> FindByCondition(Expression<Func<T, bool>> expression) =>
+            await RepositoryContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
+
+        public async System.Threading.Tasks.Task Create(T entity) => await RepositoryContext.Set<T>().AddAsync(entity);
+        public async System.Threading.Tasks.Task Update(T entity) => RepositoryContext.Set<T>().Update(entity);
+        public async System.Threading.Tasks.Task Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
     }
 }
