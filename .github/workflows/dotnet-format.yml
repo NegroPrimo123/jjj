@@ -1,25 +1,30 @@
-﻿name: .NET Test Suite
+name: .NET Test Suite
 
 on:
   push:
     branches: [main, master, develop, feature/*]
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '.gitignore'
   pull_request:
     branches: [main, master, develop]
 
 env:
   DOTNET_VERSION: "8.0.x"
-  SOLUTION_FILE: "**/*.sln"
+  SOLUTION_FILE: "task3.sln"
   TEST_PROJECT: "**/*.Tests.csproj"
 
 jobs:
   test:
-    name: Run ${{ matrix.framework }} Tests
+    name: Run ${{ matrix.framework }} Tests on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
         framework: [net8.0]
+      fail-fast: false
 
     steps:
       - name: Checkout repository
@@ -32,14 +37,23 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Verify solution file exists
+        run: |
+          if [ ! -f "$SOLUTION_FILE" ]; then
+            echo "Solution file $SOLUTION_FILE not found!"
+            ls -la *.sln || echo "No solution files found"
+            exit 1
+          fi
+          echo "Using solution file: $SOLUTION_FILE"
+
       - name: Restore NuGet packages
-        run: dotnet restore ${{ env.SOLUTION_FILE }}
+        run: dotnet restore $SOLUTION_FILE
 
       - name: Build solution
-        run: dotnet build ${{ env.SOLUTION_FILE }} --no-restore --configuration Release
+        run: dotnet build $SOLUTION_FILE --no-restore --configuration Release
 
       - name: Run unit tests
-        run: dotnet test ${{ env.TEST_PROJECT }} --no-build --configuration Release --verbosity normal --logger trx
+        run: dotnet test $SOLUTION_FILE --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results-${{ matrix.os }}-${{ matrix.framework }}.trx"
 
       - name: Upload test results
         if: always()
