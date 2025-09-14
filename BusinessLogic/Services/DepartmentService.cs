@@ -32,9 +32,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.DepartmentName))
+            if (string.IsNullOrWhiteSpace(model.DepartmentName))
             {
-                throw new ArgumentException(nameof(model.DepartmentName));
+                throw new ArgumentException("Department name cannot be empty or whitespace", nameof(model.DepartmentName));
             }
 
             await _repositoryWrapper.Department.Create(model);
@@ -48,9 +48,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.DepartmentName))
+            if (string.IsNullOrWhiteSpace(model.DepartmentName))
             {
-                throw new ArgumentException(nameof(model.DepartmentName));
+                throw new ArgumentException("Department name cannot be empty or whitespace", nameof(model.DepartmentName));
             }
 
             await _repositoryWrapper.Department.Update(model);

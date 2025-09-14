@@ -32,9 +32,14 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.ProjectName))
+            if (string.IsNullOrWhiteSpace(model.ProjectName))
             {
-                throw new ArgumentException("Project name cannot be empty", nameof(model.ProjectName));
+                throw new ArgumentException("Project name cannot be empty or whitespace", nameof(model.ProjectName));
+            }
+
+            if (model.CourseId <= 0)
+            {
+                throw new ArgumentException("CourseId must be greater than 0", nameof(model.CourseId));
             }
 
             if (model.MaxScore <= 0)
@@ -53,14 +58,19 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.ProjectName))
+            if (string.IsNullOrWhiteSpace(model.ProjectName))
             {
-                throw new ArgumentException(nameof(model.ProjectName));
+                throw new ArgumentException("Project name cannot be empty or whitespace", nameof(model.ProjectName));
+            }
+
+            if (model.CourseId <= 0)
+            {
+                throw new ArgumentException("CourseId must be greater than 0", nameof(model.CourseId));
             }
 
             if (model.MaxScore <= 0)
             {
-                throw new ArgumentException(nameof(model.MaxScore));
+                throw new ArgumentException("Max score must be greater than 0", nameof(model.MaxScore));
             }
 
             await _repositoryWrapper.Project.Update(model);

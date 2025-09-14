@@ -32,14 +32,14 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.FirstName))
+            if (string.IsNullOrWhiteSpace(model.FirstName))
             {
-                throw new ArgumentException(nameof(model.FirstName));
+                throw new ArgumentException("First name cannot be empty or whitespace", nameof(model.FirstName));
             }
 
-            if (string.IsNullOrEmpty(model.LastName))
+            if (string.IsNullOrWhiteSpace(model.LastName))
             {
-                throw new ArgumentException(nameof(model.LastName));
+                throw new ArgumentException("Last name cannot be empty or whitespace", nameof(model.LastName));
             }
 
             await _repositoryWrapper.Teacher.Create(model);
@@ -53,14 +53,14 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.FirstName))
+            if (string.IsNullOrWhiteSpace(model.FirstName))
             {
-                throw new ArgumentException(nameof(model.FirstName));
+                throw new ArgumentException("First name cannot be empty or whitespace", nameof(model.FirstName));
             }
 
-            if (string.IsNullOrEmpty(model.LastName))
+            if (string.IsNullOrWhiteSpace(model.LastName))
             {
-                throw new ArgumentException(nameof(model.LastName));
+                throw new ArgumentException("Last name cannot be empty or whitespace", nameof(model.LastName));
             }
 
             await _repositoryWrapper.Teacher.Update(model);

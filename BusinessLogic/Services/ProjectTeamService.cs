@@ -32,9 +32,14 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.TeamName))
+            if (string.IsNullOrWhiteSpace(model.TeamName))
             {
-                throw new ArgumentException(nameof(model.TeamName));
+                throw new ArgumentException("Team name cannot be empty or whitespace", nameof(model.TeamName));
+            }
+
+            if (model.ProjectId <= 0)
+            {
+                throw new ArgumentException("ProjectId must be greater than 0", nameof(model.ProjectId));
             }
 
             await _repositoryWrapper.ProjectTeam.Create(model);
@@ -48,9 +53,14 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.TeamName))
+            if (string.IsNullOrWhiteSpace(model.TeamName))
             {
-                throw new ArgumentException(nameof(model.TeamName));
+                throw new ArgumentException("Team name cannot be empty or whitespace", nameof(model.TeamName));
+            }
+
+            if (model.ProjectId <= 0)
+            {
+                throw new ArgumentException("ProjectId must be greater than 0", nameof(model.ProjectId));
             }
 
             await _repositoryWrapper.ProjectTeam.Update(model);

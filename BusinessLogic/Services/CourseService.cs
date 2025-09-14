@@ -32,9 +32,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.CourseName))
+            if (string.IsNullOrWhiteSpace(model.CourseName))
             {
-                throw new ArgumentException(nameof(model.CourseName));
+                throw new ArgumentException("Course name cannot be empty or whitespace", nameof(model.CourseName));
             }
 
             await _repositoryWrapper.Course.Create(model);
@@ -48,9 +48,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.CourseName))
+            if (string.IsNullOrWhiteSpace(model.CourseName))
             {
-                throw new ArgumentException(nameof(model.CourseName));
+                throw new ArgumentException("Course name cannot be empty or whitespace", nameof(model.CourseName));
             }
 
             await _repositoryWrapper.Course.Update(model);

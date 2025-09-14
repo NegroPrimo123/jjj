@@ -34,12 +34,20 @@ namespace BusinessLogic.Services
 
             if (model.StudentId <= 0)
             {
-                throw new ArgumentException(nameof(model.StudentId));
+                throw new ArgumentException("StudentId must be greater than 0", nameof(model.StudentId));
             }
 
             if (model.TeamId <= 0)
             {
-                throw new ArgumentException(nameof(model.TeamId));
+                throw new ArgumentException("TeamId must be greater than 0", nameof(model.TeamId));
+            }
+
+            var existing = await _repositoryWrapper.StudentTeam
+                .FindByCondition(x => x.StudentId == model.StudentId && x.TeamId == model.TeamId);
+
+            if (existing != null && existing.Any())
+            {
+                throw new ArgumentException($"Student {model.StudentId} is already in team {model.TeamId}");
             }
 
             await _repositoryWrapper.StudentTeam.Create(model);

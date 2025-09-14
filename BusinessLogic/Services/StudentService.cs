@@ -43,6 +43,10 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Update(Student model)
         {
+            if (model == null) throw new ArgumentNullException();
+            if (string.IsNullOrEmpty(model.FirstName)) throw new ArgumentException();
+            if (string.IsNullOrEmpty(model.LastName)) throw new ArgumentException();
+
             await _repositoryWrapper.Student.Update(model);
             await _repositoryWrapper.Save();
         }

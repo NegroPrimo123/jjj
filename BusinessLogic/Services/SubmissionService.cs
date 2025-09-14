@@ -52,6 +52,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentException(nameof(model.Status));
             }
 
+            if (model.SubmissionDate > DateTime.Now)
+                throw new ArgumentException("Submission date cannot be in the future");
+
             await _repositoryWrapper.Submission.Create(model);
             await _repositoryWrapper.Save();
         }
@@ -94,7 +97,7 @@ namespace BusinessLogic.Services
 
             if (submission == null || !submission.Any())
             {
-                throw new ArgumentException($"Submission with id {id} not found");
+                throw new InvalidOperationException($"Submission with id {id} not found");
             }
 
             await _repositoryWrapper.Submission.Delete(submission.First());

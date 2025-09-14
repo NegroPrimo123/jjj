@@ -32,9 +32,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.GroupName))
+            if (string.IsNullOrWhiteSpace(model.GroupName))
             {
-                throw new ArgumentException(nameof(model.GroupName));
+                throw new ArgumentException("Group name cannot be empty or whitespace", nameof(model.GroupName));
             }
 
             await _repositoryWrapper.Group.Create(model);
@@ -48,9 +48,9 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (string.IsNullOrEmpty(model.GroupName))
+            if (string.IsNullOrWhiteSpace(model.GroupName))
             {
-                throw new ArgumentException(nameof(model.GroupName));
+                throw new ArgumentException("Group name cannot be empty or whitespace", nameof(model.GroupName));
             }
 
             await _repositoryWrapper.Group.Update(model);
