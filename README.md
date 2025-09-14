@@ -21,3 +21,7 @@
 Подключил в репозиторий GitHub Actions
 ![photo_5346167744812414221_y (1)](https://github.com/user-attachments/assets/4dea8e71-a865-4a4d-a2bb-ac3b54af88d5)
 ![photo_5346167744812414230_y (1)](https://github.com/user-attachments/assets/843ee1da-7f7d-4099-ba9a-df672b79259f)
+
+Задание 4
+Покрыл проект тестами для корректного поведения приложения. 
+<img width="713" height="555" alt="image" src="https://github.com/user-attachments/assets/782e3190-dc2b-47cf-81a3-43f6b4bf0102" />
