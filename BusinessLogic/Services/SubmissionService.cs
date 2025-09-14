@@ -27,14 +27,64 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Submission model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.TeamId <= 0)
+            {
+                throw new ArgumentException(nameof(model.TeamId));
+            }
+
+            if (model.TaskId <= 0)
+            {
+                throw new ArgumentException(nameof(model.TaskId));
+            }
+
+            if (string.IsNullOrWhiteSpace(model.FilePath))
+            {
+                throw new ArgumentException(nameof(model.FilePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Status))
+            {
+                throw new ArgumentException(nameof(model.Status));
+            }
+
             await _repositoryWrapper.Submission.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Submission model)
         {
-            _repositoryWrapper.Submission.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.TeamId <= 0)
+            {
+                throw new ArgumentException(nameof(model.TeamId));
+            }
+
+            if (model.TaskId <= 0)
+            {
+                throw new ArgumentException(nameof(model.TaskId));
+            }
+
+            if (string.IsNullOrWhiteSpace(model.FilePath))
+            {
+                throw new ArgumentException(nameof(model.FilePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Status))
+            {
+                throw new ArgumentException(nameof(model.Status));
+            }
+
+            await _repositoryWrapper.Submission.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +92,13 @@ namespace BusinessLogic.Services
             var submission = await _repositoryWrapper.Submission
                 .FindByCondition(x => x.SubmissionId == id);
 
-            _repositoryWrapper.Submission.Delete(submission.First());
-            _repositoryWrapper.Save();
+            if (submission == null || !submission.Any())
+            {
+                throw new ArgumentException($"Submission with id {id} not found");
+            }
+
+            await _repositoryWrapper.Submission.Delete(submission.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

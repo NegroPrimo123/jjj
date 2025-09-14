@@ -1,27 +1,49 @@
-﻿name: .NET Format Check
+﻿name: .NET Test Suite
 
 on:
   push:
-    branches: [ \
-**\ ]
+    branches: [main, master, develop, feature/*]
   pull_request:
-    branches: [ \**\ ]
+    branches: [main, master, develop]
+
+env:
+  DOTNET_VERSION: "8.0.x"
+  SOLUTION_FILE: "**/*.sln"
+  TEST_PROJECT: "**/*.Tests.csproj"
 
 jobs:
-  format-check:
-    runs-on: ubuntu-latest
-    
+  test:
+    name: Run ${{ matrix.framework }} Tests
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        framework: [net8.0]
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install dotnet-format
-      run: dotnet tool install -g dotnet-format
+      - name: Restore NuGet packages
+        run: dotnet restore ${{ env.SOLUTION_FILE }}
 
-    - name: Check formatting
-      run: dotnet-format --folder --check --verbosity diagnostic
+      - name: Build solution
+        run: dotnet build ${{ env.SOLUTION_FILE }} --no-restore --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test ${{ env.TEST_PROJECT }} --no-build --configuration Release --verbosity normal --logger trx
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}-${{ matrix.framework }}
+          path: "**/*.trx"

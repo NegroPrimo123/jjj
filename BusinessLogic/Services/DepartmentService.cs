@@ -27,14 +27,34 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Department model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.DepartmentName))
+            {
+                throw new ArgumentException(nameof(model.DepartmentName));
+            }
+
             await _repositoryWrapper.Department.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Department model)
         {
-            _repositoryWrapper.Department.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.DepartmentName))
+            {
+                throw new ArgumentException(nameof(model.DepartmentName));
+            }
+
+            await _repositoryWrapper.Department.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +62,8 @@ namespace BusinessLogic.Services
             var department = await _repositoryWrapper.Department
                 .FindByCondition(x => x.DepartmentId == id);
 
-            _repositoryWrapper.Department.Delete(department.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Department.Delete(department.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

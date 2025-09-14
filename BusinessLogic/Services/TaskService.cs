@@ -27,14 +27,44 @@
 
 //        public async System.Threading.Tasks.Task Create(System.Threading.Tasks.Task model)
 //        {
+//            if (model == null)
+//            {
+//                throw new ArgumentNullException(nameof(model));
+//            }
+
+//            if (string.IsNullOrEmpty(model.TaskName))
+//            {
+//                throw new ArgumentException(nameof(model.TaskName));
+//            }
+
+//            if (model.ProjectId <= 0)
+//            {
+//                throw new ArgumentException(nameof(model.ProjectId));
+//            }
+
 //            await _repositoryWrapper.Task.Create(model);
-//            _repositoryWrapper.Save();
+//            await _repositoryWrapper.Save();
 //        }
 
 //        public async System.Threading.Tasks.Task Update(System.Threading.Tasks.Task model)
 //        {
-//            _repositoryWrapper.Task.Update(model);
-//            _repositoryWrapper.Save();
+//            if (model == null)
+//            {
+//                throw new ArgumentNullException(nameof(model));
+//            }
+
+//            if (string.IsNullOrEmpty(model.TaskName))
+//            {
+//                throw new ArgumentException(nameof(model.TaskName));
+//            }
+
+//            if (model.ProjectId <= 0)
+//            {
+//                throw new ArgumentException( nameof(model.ProjectId));
+//            }
+
+//            await _repositoryWrapper.Task.Update(model);
+//            await _repositoryWrapper.Save();
 //        }
 
 //        public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +72,8 @@
 //            var task = await _repositoryWrapper.Task
 //                .FindByCondition(x => x.TaskId == id);
 
-//            _repositoryWrapper.Task.Delete(task.First());
-//            _repositoryWrapper.Save();
+//            await _repositoryWrapper.Task.Delete(task.First());
+//            await _repositoryWrapper.Save();
 //        }
 //    }
 //}

@@ -27,14 +27,34 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Projectteam model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.TeamName))
+            {
+                throw new ArgumentException(nameof(model.TeamName));
+            }
+
             await _repositoryWrapper.ProjectTeam.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Projectteam model)
         {
-            _repositoryWrapper.ProjectTeam.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.TeamName))
+            {
+                throw new ArgumentException(nameof(model.TeamName));
+            }
+
+            await _repositoryWrapper.ProjectTeam.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +62,8 @@ namespace BusinessLogic.Services
             var projectTeam = await _repositoryWrapper.ProjectTeam
                 .FindByCondition(x => x.TeamId == id);
 
-            _repositoryWrapper.ProjectTeam.Delete(projectTeam.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.ProjectTeam.Delete(projectTeam.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

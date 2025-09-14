@@ -27,14 +27,44 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Project model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.ProjectName))
+            {
+                throw new ArgumentException("Project name cannot be empty", nameof(model.ProjectName));
+            }
+
+            if (model.MaxScore <= 0)
+            {
+                throw new ArgumentException("Max score must be greater than 0", nameof(model.MaxScore));
+            }
+
             await _repositoryWrapper.Project.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Project model)
         {
-            _repositoryWrapper.Project.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.ProjectName))
+            {
+                throw new ArgumentException(nameof(model.ProjectName));
+            }
+
+            if (model.MaxScore <= 0)
+            {
+                throw new ArgumentException(nameof(model.MaxScore));
+            }
+
+            await _repositoryWrapper.Project.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +72,8 @@ namespace BusinessLogic.Services
             var project = await _repositoryWrapper.Project
                 .FindByCondition(x => x.ProjectId == id);
 
-            _repositoryWrapper.Project.Delete(project.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Project.Delete(project.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

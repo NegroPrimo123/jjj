@@ -27,14 +27,24 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Student model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.FirstName))
+            {
+                throw new ArgumentException(nameof(model.FirstName));
+            }
+
             await _repositoryWrapper.Student.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Student model)
         {
-            _repositoryWrapper.Student.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Student.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +52,8 @@ namespace BusinessLogic.Services
             var user = await _repositoryWrapper.Student
                 .FindByCondition(x => x.StudentId == id);
 
-            _repositoryWrapper.Student.Delete(user.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Student.Delete(user.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

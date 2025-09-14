@@ -27,13 +27,44 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Teacher model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.FirstName))
+            {
+                throw new ArgumentException(nameof(model.FirstName));
+            }
+
+            if (string.IsNullOrEmpty(model.LastName))
+            {
+                throw new ArgumentException(nameof(model.LastName));
+            }
+
             await _repositoryWrapper.Teacher.Create(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Teacher model)
         {
-            _repositoryWrapper.Teacher.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.FirstName))
+            {
+                throw new ArgumentException(nameof(model.FirstName));
+            }
+
+            if (string.IsNullOrEmpty(model.LastName))
+            {
+                throw new ArgumentException(nameof(model.LastName));
+            }
+
+            await _repositoryWrapper.Teacher.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -41,8 +72,8 @@ namespace BusinessLogic.Services
             var teacher = await _repositoryWrapper.Teacher
                 .FindByCondition(x => x.TeacherId == id);
 
-            _repositoryWrapper.Teacher.Delete(teacher.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Teacher.Delete(teacher.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

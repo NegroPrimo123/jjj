@@ -27,14 +27,34 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Group model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.GroupName))
+            {
+                throw new ArgumentException(nameof(model.GroupName));
+            }
+
             await _repositoryWrapper.Group.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Group model)
         {
-            _repositoryWrapper.Group.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.GroupName))
+            {
+                throw new ArgumentException(nameof(model.GroupName));
+            }
+
+            await _repositoryWrapper.Group.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +62,8 @@ namespace BusinessLogic.Services
             var group = await _repositoryWrapper.Group
                 .FindByCondition(x => x.GroupId == id);
 
-            _repositoryWrapper.Group.Delete(group.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Group.Delete(group.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

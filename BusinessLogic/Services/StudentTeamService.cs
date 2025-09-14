@@ -27,14 +27,44 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Studentteam model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.StudentId <= 0)
+            {
+                throw new ArgumentException(nameof(model.StudentId));
+            }
+
+            if (model.TeamId <= 0)
+            {
+                throw new ArgumentException(nameof(model.TeamId));
+            }
+
             await _repositoryWrapper.StudentTeam.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Studentteam model)
         {
-            _repositoryWrapper.StudentTeam.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.StudentId <= 0)
+            {
+                throw new ArgumentException(nameof(model.StudentId));
+            }
+
+            if (model.TeamId <= 0)
+            {
+                throw new ArgumentException(nameof(model.TeamId));
+            }
+
+            await _repositoryWrapper.StudentTeam.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +72,8 @@ namespace BusinessLogic.Services
             var studentTeam = await _repositoryWrapper.StudentTeam
                 .FindByCondition(x => x.Id == id);
 
-            _repositoryWrapper.StudentTeam.Delete(studentTeam.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.StudentTeam.Delete(studentTeam.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

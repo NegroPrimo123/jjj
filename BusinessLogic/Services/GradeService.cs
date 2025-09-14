@@ -27,14 +27,34 @@ namespace BusinessLogic.Services
 
         public async System.Threading.Tasks.Task Create(Grade model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.Score < 0 || model.Score > 100)
+            {
+                throw new ArgumentException(nameof(model.Score));
+            }
+
             await _repositoryWrapper.Grade.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Update(Grade model)
         {
-            _repositoryWrapper.Grade.Update(model);
-            _repositoryWrapper.Save();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.Score < 0 || model.Score > 100)
+            {
+                throw new ArgumentException(nameof(model.Score));
+            }
+
+            await _repositoryWrapper.Grade.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -42,8 +62,8 @@ namespace BusinessLogic.Services
             var grade = await _repositoryWrapper.Grade
                 .FindByCondition(x => x.GradeId == id);
 
-            _repositoryWrapper.Grade.Delete(grade.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Grade.Delete(grade.First());
+            await _repositoryWrapper.Save();
         }
     }
 }
