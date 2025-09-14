@@ -34,26 +34,28 @@ namespace BusinessLogic.Services
 
             if (model.TeamId <= 0)
             {
-                throw new ArgumentException(nameof(model.TeamId));
+                throw new ArgumentException("TeamId must be greater than 0", nameof(model.TeamId));
             }
 
             if (model.TaskId <= 0)
             {
-                throw new ArgumentException(nameof(model.TaskId));
+                throw new ArgumentException("TaskId must be greater than 0", nameof(model.TaskId));
             }
 
             if (string.IsNullOrWhiteSpace(model.FilePath))
             {
-                throw new ArgumentException(nameof(model.FilePath));
+                throw new ArgumentException("FilePath cannot be null or empty", nameof(model.FilePath));
             }
 
             if (string.IsNullOrWhiteSpace(model.Status))
             {
-                throw new ArgumentException(nameof(model.Status));
+                throw new ArgumentException("Status cannot be null or empty", nameof(model.Status));
             }
 
             if (model.SubmissionDate > DateTime.Now)
-                throw new ArgumentException("Submission date cannot be in the future");
+            {
+                throw new ArgumentException("Submission date cannot be in the future", nameof(model.SubmissionDate));
+            }
 
             await _repositoryWrapper.Submission.Create(model);
             await _repositoryWrapper.Save();
