@@ -66,7 +66,7 @@ namespace BusinessLogic.Tests
             // arrange
             var invalidTeacher = new Teacher
             {
-                FirstName = firstName,
+                FirstName = firstName, // ← ПЕРЕДАЕМ НЕВАЛИДНОЕ ИМЯ
                 LastName = "Doe"
             };
 
