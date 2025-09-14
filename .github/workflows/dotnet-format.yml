@@ -13,7 +13,6 @@ on:
 env:
   DOTNET_VERSION: "8.0.x"
   SOLUTION_FILE: "task3.sln"
-  TEST_PROJECT: "**/*.Tests.csproj"
 
 jobs:
   test:
@@ -39,21 +38,29 @@ jobs:
 
       - name: Verify solution file exists
         run: |
-          if [ ! -f "$SOLUTION_FILE" ]; then
-            echo "Solution file $SOLUTION_FILE not found!"
-            ls -la *.sln || echo "No solution files found"
-            exit 1
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            if (!(Test-Path "${{ env.SOLUTION_FILE }}" -PathType Leaf)) {
+              echo "Solution file ${{ env.SOLUTION_FILE }} not found!"
+              Get-ChildItem *.sln
+              exit 1
+            }
+          else
+            if [ ! -f "${{ env.SOLUTION_FILE }}" ]; then
+              echo "Solution file ${{ env.SOLUTION_FILE }} not found!"
+              ls -la *.sln
+              exit 1
+            fi
           fi
-          echo "Using solution file: $SOLUTION_FILE"
+          echo "Using solution file: ${{ env.SOLUTION_FILE }}"
 
       - name: Restore NuGet packages
-        run: dotnet restore $SOLUTION_FILE
+        run: dotnet restore ${{ env.SOLUTION_FILE }}
 
       - name: Build solution
-        run: dotnet build $SOLUTION_FILE --no-restore --configuration Release
+        run: dotnet build ${{ env.SOLUTION_FILE }} --no-restore --configuration Release
 
       - name: Run unit tests
-        run: dotnet test $SOLUTION_FILE --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results-${{ matrix.os }}-${{ matrix.framework }}.trx"
+        run: dotnet test ${{ env.SOLUTION_FILE }} --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results-${{ matrix.os }}-${{ matrix.framework }}.trx"
 
       - name: Upload test results
         if: always()
