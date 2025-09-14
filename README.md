@@ -23,5 +23,7 @@
 ![photo_5346167744812414230_y (1)](https://github.com/user-attachments/assets/843ee1da-7f7d-4099-ba9a-df672b79259f)
 
 Задание 4
-Покрыл проект тестами для корректного поведения приложения. 
-<img width="713" height="555" alt="image" src="https://github.com/user-attachments/assets/782e3190-dc2b-47cf-81a3-43f6b4bf0102" />
+1.
+2. Покрыл проект тестами для корректного поведения приложения. 
+<img width="678" height="290" alt="image" src="https://github.com/user-attachments/assets/12836408-8835-4677-9fa9-ea077ebc5497" />
+
