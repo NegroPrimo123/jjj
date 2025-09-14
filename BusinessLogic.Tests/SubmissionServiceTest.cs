@@ -61,30 +61,30 @@ namespace BusinessLogic.Tests
         }
 
         [Theory]
-        [InlineData(0, 1)]
-        [InlineData(1, 0)]
-        [InlineData(-1, 1)]
-        [InlineData(1, -1)]
-        public async System.Threading.Tasks.Task Create_InvalidIds_ShouldThrowArgumentException(int teamId, int taskId)
+        [InlineData("")]
+        [InlineData("   ")]
+        [InlineData(null)]
+        public async System.Threading.Tasks.Task Create_InvalidFilePath_ShouldThrowArgumentException(string filePath)
         {
+            // arrange
             var invalidSubmission = new Submission
             {
-                TeamId = teamId,
-                TaskId = taskId,
+                TeamId = 1,
+                TaskId = 1,
                 SubmissionDate = DateTime.Now,
-                FilePath = "/files/analysis.docx",
+                FilePath = filePath,
                 Status = "Submitted"
             };
 
-        // act & assert
-        await Assert.ThrowsAsync<ArgumentException>(() => _service.Create(invalidSubmission));
+            // act & assert
+            await Assert.ThrowsAsync<ArgumentException>(() => _service.Create(invalidSubmission));
         }
 
         [Theory]
         [InlineData("")]
         [InlineData("   ")]
         [InlineData(null)]
-        public async System.Threading.Tasks.Task Create_InvalidContent_ShouldThrowArgumentException(string content)
+        public async System.Threading.Tasks.Task Create_InvalidStatus_ShouldThrowArgumentException(string status)
         {
             // arrange
             var invalidSubmission = new Submission
@@ -93,7 +93,7 @@ namespace BusinessLogic.Tests
                 TaskId = 1,
                 SubmissionDate = DateTime.Now,
                 FilePath = "/files/analysis.docx",
-                Status = "Submitted"
+                Status = status
             };
 
             // act & assert
@@ -108,7 +108,7 @@ namespace BusinessLogic.Tests
             {
                 TeamId = 1,
                 TaskId = 1,
-                SubmissionDate = DateTime.Now,
+                SubmissionDate = DateTime.Now.AddDays(1), // Дата в будущем
                 FilePath = "/files/analysis.docx",
                 Status = "Submitted"
             };
