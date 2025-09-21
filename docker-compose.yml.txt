@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Сервис базы данных PostgreSQL
+  postgresdb:
+    image: postgres:15
+    container_name: task3_postgres
+    environment:
+      POSTGRES_DB: task2_DB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root111
+    ports:
+      - "1357:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - task3_network
+
+  # Приложение
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task3_app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=postgresdb;Port=5432;Database=task2_DB;User Id=postgres;Password=root111;
+    ports:
+      - "5000:80"
+      - "5001:443"
+    depends_on:
+      - postgresdb
+    restart: unless-stopped
+    networks:
+      - task3_network
+
+volumes:
+  postgres_data:
+
+networks:
+  task3_network:
+    driver: bridge
